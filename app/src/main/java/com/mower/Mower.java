@@ -63,10 +63,10 @@ public class Mower {
         switch (mDirection.getCurrentDirection()) {
             case Direction.NORTH:
                 for (Mower mower : mowers) {
-                if (mower.getName().compareToIgnoreCase(mName) == 0) continue;
-                if (mower.getY() == (mYLocation + 1) && mower.getX() == mXLocation)
-                    return false;
-            }
+                    if (mower.getName().compareToIgnoreCase(mName) == 0) continue;
+                    if (mower.getY() == (mYLocation + 1) && mower.getX() == mXLocation)
+                        return false;
+                }
 
                 if (mYLocation < (areaHeight - 1)) {
                     if (mWorld.getLawn(mXLocation, mYLocation + 1).isDone()) return false;
@@ -113,7 +113,7 @@ public class Mower {
         return false;
     }
 
-    public boolean validateMowerNotFront(List<Mower> list){
+    public boolean isFrontMower(List<Mower> list) {
         switch (mDirection.getCurrentDirection()) {
             case Direction.NORTH:
                 for (Mower mower : list) {
@@ -145,7 +145,55 @@ public class Mower {
                         return false;
                 }
         }
-            return true;
+        return true;
+    }
+
+    public boolean isLeftPassable() {
+        switch (mDirection.getCurrentDirection()) {
+            case Direction.NORTH:
+                if (mXLocation == 0) return false;
+                if (getWorld().getLawn(mXLocation - 1, mYLocation).isDone()) return false;
+                break;
+            case Direction.SOUTH:
+                if (mXLocation == (mWorld.getWidth() - 1)) return false;
+                if (getWorld().getLawn(mXLocation + 1, mYLocation).isDone()) return false;
+                break;
+
+            case Direction.EAST:
+                if (mYLocation == (mWorld.getHeight() - 1)) return false;
+                if (getWorld().getLawn(mXLocation, mYLocation + 1).isDone()) return false;
+                break;
+
+            case Direction.WEST:
+                if (mYLocation == 0) return false;
+                if (getWorld().getLawn(mXLocation, mYLocation - 1).isDone()) return false;
+                break;
+        }
+        return true;
+    }
+
+    public boolean isRightPassable() {
+        switch (mDirection.getCurrentDirection()) {
+            case Direction.NORTH:
+                if (mXLocation == mWorld.getWidth() - 1) return false;
+                if (getWorld().getLawn(mXLocation + 1, mYLocation).isDone()) return false;
+                break;
+            case Direction.SOUTH:
+                if (mXLocation == 0) return false;
+                if (getWorld().getLawn(mXLocation - 1, mYLocation).isDone()) return false;
+                break;
+
+            case Direction.EAST:
+                if (mYLocation == 0) return false;
+                if (getWorld().getLawn(mXLocation, mYLocation - 1).isDone()) return false;
+                break;
+
+            case Direction.WEST:
+                if (mYLocation == (mWorld.getHeight() - 1)) return false;
+                if (getWorld().getLawn(mXLocation, mYLocation + 1).isDone()) return false;
+                break;
+        }
+        return true;
     }
 
 

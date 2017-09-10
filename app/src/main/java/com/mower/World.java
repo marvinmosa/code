@@ -138,15 +138,24 @@ public class World {
                 if (mower.validateInstruction("M", mWidth, mHeight, mMowers)) {
                     mower.getInstruction().addInstruction("M");
                     mower.executeMovement("M");
-
                     getLawn(mower.getX(), mower.getY()).setDone(true);
                     Log.d("Marvin", "size: " + mower.getInstruction().getSize() + "(" + mower.getX() + "," + mower.getY() + ")");
                 } else {
-                    if(mower.validateMowerNotFront(mMowers)) {
+                    if(!mower.isFrontMower(mMowers)) {
+                        continue;
+                    }
+                    if(!mower.isFrontMower(mMowers) && !mower.isLeftPassable()) {
                         mower.getInstruction().addInstruction("R");
                         mower.executeMovement("R");
                         getLawn(mower.getX(), mower.getY()).setDone(true);
                         Log.d("Marvin", "size: " + mower.getInstruction().getSize());
+                    } else {
+                        if(mower.isRightPassable()) {
+                            mower.getInstruction().addInstruction("R");
+                            mower.executeMovement("R");
+                            getLawn(mower.getX(), mower.getY()).setDone(true);
+                            Log.d("Marvin", "size: " + mower.getInstruction().getSize());
+                        }
                     }
                 }
             }
@@ -272,5 +281,21 @@ public class World {
         }
 
         return count;
+    }
+
+    public int getWidth() {
+        return mWidth;
+    }
+
+    public void setWidth(int w) {
+        this.mWidth = w;
+    }
+
+    public int getHeight() {
+        return mHeight;
+    }
+
+    public void setHeight(int h) {
+        this.mHeight = h;
     }
 }
