@@ -84,4 +84,23 @@ public class Mower {
     public Direction getDirection() {
         return this.mDirection;
     }
+
+    public String display(String icon){
+        String identifier ="";
+        switch(mDirection.getCurrentDirection()) {
+            case Direction.NORTH:
+                identifier = "↑";
+                break;
+            case Direction.SOUTH:
+                identifier = "↓";
+                break;
+            case Direction.EAST:
+                identifier = "→";
+                break;
+            case Direction.WEST:
+                identifier = "←";
+                break;
+        }
+        return icon + identifier + " ";
+    }
 }

@@ -28,7 +28,7 @@ public class World {
         mLawns = new Lawn[height][width];
         for (int x = 0; x < mLawns.length; x++) {
             for (int y = 0; y < mLawns[x].length; y++) {
-                mLawns[x][y] = new Lawn(x, y);
+                mLawns[x][y] = new Lawn(y, x);
             }
         }
     }
@@ -106,7 +106,13 @@ public class World {
 
         for (int x = 0; x < temp.length; x++) {
             for (int y = 0; y < temp[x].length; y++) {
-                data = temp[x][y].display(data);
+                for (Mower mower : mMowers) {
+                    if(temp[x][y].getXLocation() == mower.getX() && temp[x][y].getYLocation() == mower.getY()){
+                        data = mower.display(data);
+                    } else {
+                        data = temp[x][y].display(data);
+                    }
+                }
             }
             data = data + "\n";
         }
@@ -129,5 +135,4 @@ public class World {
         }
         Log.d("Marvin", data);
     }
-
 }
