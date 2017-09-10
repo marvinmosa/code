@@ -1,5 +1,9 @@
 package com.mower;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -7,21 +11,30 @@ import java.util.List;
  */
 
 public class Instruction {
-    private String[] mInstructionList;
+    private List<String> mInstructionList;
 
+    public Instruction(){
+        mInstructionList = new ArrayList<>();
+    }
     public Instruction(String instruction) {
         mInstructionList = decode(instruction);
     }
 
-    public String[] decode(String instruction) {
-        return instruction.split("");
+    public List<String> decode(String instruction) {
+        String[] list = instruction.split("");
+        mInstructionList = Arrays.asList(list);
+        return mInstructionList;
     }
 
     public int getSize() {
-        return mInstructionList.length;
+        return mInstructionList.size();
     }
 
-    public String[] getInstructionList(){
+    public List<String> getInstructionList(){
         return mInstructionList;
+    }
+
+    public void addInstruction(String instruction) {
+        this.mInstructionList.add(instruction);
     }
 }

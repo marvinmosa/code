@@ -59,6 +59,19 @@ public class Direction {
         }
     }
 
+    public String toString( int current) {
+        switch (current) {
+            case NORTH:
+                return "N";
+            case EAST:
+                return "E";
+            case SOUTH:
+                return "S";
+            default:
+                return "W";
+        }
+    }
+
     public void setCurrentDirection(int current) {
         this.mCurrent = current;
     }

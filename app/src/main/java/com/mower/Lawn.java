@@ -37,9 +37,8 @@ public class Lawn {
     }
 
     public String display(String string) {
-        if (isMowerHere) return string + "M ";
-        if (isDone()) return string + "X ";
-        return string + "O ";
+        if (isDone()) return string + "X  ";
+        return string + "O  ";
     }
 
     public int getXLocation() {
