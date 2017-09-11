@@ -198,7 +198,6 @@ public class Mower {
 
 
     public void moveForward() {
-        Log.d("Marvin", "Direction: " + mDirection.toString());
         switch (mDirection.getCurrentDirection()) {
             case Direction.NORTH:
                 mYLocation++;

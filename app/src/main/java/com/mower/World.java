@@ -1,11 +1,7 @@
 package com.mower;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.MemoryHandler;
-
 /**
  * Created by marvinmosa on 9/7/17.
  */
@@ -62,8 +58,6 @@ public class World {
                     getLawn(mower.getX(), mower.getY()).setDone(true);
                     mActivity.addLog(mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
                             + ") and heading " + mower.getDirection().toString());
-                    Log.d("Marvin", mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
-                            + ") and heading " + mower.getDirection().toString());
 
                     Mower mower2 = new Mower("Mower 2", mWidth - 1, mHeight - 1);
                     mower2.setDirection(Direction.SOUTH);
@@ -73,8 +67,6 @@ public class World {
                     getLawn(mower2.getX(), mower2.getY()).setDone(true);
                     mActivity.addLog(mower2.getName() + " initial position(" + mower2.getX() + "," + mower2.getY()
                             + ") and heading " + mower.getDirection().toString());
-                    Log.d("Marvin", mower2.getName() + " initial position(" + mower2.getX() + "," + mower2.getY()
-                            + ") and heading " + mower2.getDirection().toString());
                 } else {
                     Mower mower = new Mower("Mower 1", 0, mHeight - 1);
                     mower.setDirection(Direction.EAST);
@@ -84,8 +76,6 @@ public class World {
                     getLawn(mower.getX(), mower.getY()).setDone(true);
                     mActivity.addLog(mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
                             + ") and heading " + mower.getDirection().toString());
-                    Log.d("Marvin", mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
-                            + ") and heading " + mower.getDirection().toString());
                     Mower mower2 = new Mower("Mower 2", mWidth - 1, 0);
                     mower2.setDirection(Direction.WEST);
                     mower2.setInstruction(new Instruction());
@@ -93,8 +83,6 @@ public class World {
                     mMowers.add(mower2);
                     getLawn(mower2.getX(), mower2.getY()).setDone(true);
                     mActivity.addLog(mower2.getName() + " initial position(" + mower2.getX() + "," + mower2.getY()
-                            + ") and heading " + mower.getDirection().toString());
-                    Log.d("Marvin", mower2.getName() + " initial position(" + mower2.getX() + "," + mower2.getY()
                             + ") and heading " + mower.getDirection().toString());
                 }
                 break;
@@ -114,8 +102,6 @@ public class World {
                         mMowers.add(mower);
                         getLawn(mower.getX(), mower.getY()).setDone(true);
                         mActivity.addLog(mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
-                                + ") and heading " + mower.getDirection().toString());
-                        Log.d("Marvin", mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
                                 + ") and heading " + mower.getDirection().toString());
                     }
 
@@ -137,8 +123,6 @@ public class World {
                         getLawn(mower.getX(), mower.getY()).setDone(true);
                         mActivity.addLog(mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
                                 + ") and heading " + mower.getDirection().toString());
-                        Log.d("Marvin", mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
-                                + ") and heading " + mower.getDirection().toString());
                     }
                 }
                 break;
@@ -154,8 +138,6 @@ public class World {
                     getLawn(mower.getX(), mower.getY()).setDone(true);
                     mActivity.addLog(mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                             + ") and heading " + mower.getDirection().toString());
-                    Log.d("Marvin", mower.getName() + " position(" + mower.getX() + "," + mower.getY()
-                            + ") and heading " + mower.getDirection().toString());
                 } else {
                     if (!mower.isFrontMower(mMowers) && !mower.isRightPassable()) {
                         continue;
@@ -166,16 +148,12 @@ public class World {
                         getLawn(mower.getX(), mower.getY()).setDone(true);
                         mActivity.addLog(mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                                 + ") and heading " + mower.getDirection().toString());
-                        Log.d("Marvin", mower.getName() + " position(" + mower.getX() + "," + mower.getY()
-                                + ") and heading " + mower.getDirection().toString());
                     } else {
                         if (mower.isRightPassable()) {
                             mower.getInstruction().addInstruction("R");
                             mower.executeMovement("R");
                             getLawn(mower.getX(), mower.getY()).setDone(true);
                             mActivity.addLog(mower.getName() + " position(" + mower.getX() + "," + mower.getY()
-                                    + ") and heading " + mower.getDirection().toString());
-                            Log.d("Marvin", mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                                     + ") and heading " + mower.getDirection().toString());
                         }
                     }
@@ -188,7 +166,6 @@ public class World {
         for (Mower mower : mMowers) {
             output = output + mower.getInitialXLocation() + " " + mower.getInitialYLocation() + " " + mower.getDirection().toString(mower.getDirection().getCurrentDirection()) + "\n";
             output = output + Utilities.arrayToString(mower.getInstruction().getInstructionList()) + "\n\n";
-            Log.d("Marvin", "size: " + mower.getInstruction().getSize());
         }
         mActivity.showOutput(output);
     }
@@ -209,11 +186,8 @@ public class World {
                         mower.executeMovement(mower.getInstruction().getInstructionList().get(ctr));
                         mActivity.addLog(mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                                 + ") and heading " + mower.getDirection().toString());
-                        Log.d("Marvin", mower.getName() + " position(" + mower.getX() + "," + mower.getY()
-                                + ") and heading " + mower.getDirection().toString());
                     } else {
                         mActivity.addLog(mower.getName() + " invalid move");
-                        Log.d("Marvin", mower.getName() + " invalid move");
                     }
                 }
             }
@@ -232,8 +206,6 @@ public class World {
         Mower mower = new Mower(name, x, y, direction);
         mower.setInstruction(new Instruction(instruction));
         mActivity.addLog(name + " initial position(" + mower.getX() + "," + mower.getY()
-                + ") and heading " + mower.getDirection().toString());
-        Log.d("Marvin", name + " initial position(" + mower.getX() + "," + mower.getY()
                 + ") and heading " + mower.getDirection().toString());
         mower.setWorld(this);
         mMowers.add(mower);
@@ -274,7 +246,6 @@ public class World {
             }
             data = data + "\n";
         }
-        Log.d("Marvin", data);
         mActivity.addLog(data);
     }
 
@@ -292,7 +263,6 @@ public class World {
             }
             data = data + "\n";
         }
-        Log.d("Marvin", data);
     }
 
     public int getAvailableLawn() {

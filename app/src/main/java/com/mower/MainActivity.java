@@ -76,6 +76,7 @@ public class MainActivity extends TemplateActivity {
                         //GO
 
                         mWorld.getMowers().get(mWorld.getMowers().size() - 1).setInstruction(new Instruction(commands[0]));
+                        addLog(mWorld.getMowers().get(mWorld.getMowers().size() - 1).getName() + "\'s set of commands: "+commands[0]);
                         showToast("updated " +mWorld.getMowers().get(mWorld.getMowers().size() - 1).getName() + "\'s Instruction Set");
                         mInput.setText(null);
                         break;
@@ -181,6 +182,7 @@ public class MainActivity extends TemplateActivity {
                             }
 
                             mWorld.addMower(name, x, y, Utilities.directionConverter(commands[2]), "");
+                            mInput.setText(null);
                         }
                         break;
                     default:
