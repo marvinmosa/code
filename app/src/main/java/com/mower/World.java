@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.MemoryHandler;
 
 /**
  * Created by marvinmosa on 9/7/17.
@@ -123,11 +124,31 @@ public class World {
                     }
 
                 } else {
+                    int[] locList = Utilities.splitIntoParts(mHeight, num);
+                    int partRemaining = mHeight;
+                    int ctr = 0;
+                    for (int i = num; 0 < i; i--) {
+                        Mower mower;
+                        mower = new Mower("Mower " + (ctr + 1), 0, partRemaining - 1);
+                        mower.setDirection(Direction.EAST);
+                        partRemaining = partRemaining - (locList[ctr]);
+                        ctr++;
 
+
+                        mower.setInstruction(new Instruction());
+                        mower.setWorld(this);
+                        mMowers.add(mower);
+                        getLawn(mower.getX(), mower.getY()).setDone(true);
+                        mActivity.addLog(mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
+                                + ") and heading " + mower.getDirection().toString());
+                        Log.d("Marvin", mower.getName() + " initial position(" + mower.getX() + "," + mower.getY()
+                                + ") and heading " + mower.getDirection().toString());
+                    }
                 }
-
                 break;
         }
+
+        displayLand();
 
         while (getAvailableLawn() != 0) {
             for (Mower mower : mMowers) {
@@ -140,7 +161,7 @@ public class World {
                     Log.d("Marvin", mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                             + ") and heading " + mower.getDirection().toString());
                 } else {
-                    if (!mower.isFrontMower(mMowers)) {
+                    if (!mower.isFrontMower(mMowers) && !mower.isRightPassable()) {
                         continue;
                     }
                     if (!mower.isFrontMower(mMowers) && !mower.isLeftPassable()) {
@@ -303,5 +324,9 @@ public class World {
 
     public void setHeight(int h) {
         this.mHeight = h;
+    }
+
+    public List<Mower> getMowers() {
+        return mMowers;
     }
 }
