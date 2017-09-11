@@ -92,7 +92,7 @@ public class TemplateActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
-    public void showError(String body) {
+    public void showToast(String body) {
         Toast.makeText(this, body, Toast.LENGTH_SHORT).show();
     }
 }

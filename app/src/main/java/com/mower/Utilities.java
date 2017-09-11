@@ -36,4 +36,18 @@ public class Utilities {
         }
         return output;
     }
+
+    public static int directionConverter(String direction){
+        switch (direction) {
+            case "N":
+                return Direction.NORTH;
+            case "S":
+                return Direction.SOUTH;
+            case "W":
+                return Direction.WEST;
+            default:
+                return Direction.EAST;
+        }
+    }
+
 }

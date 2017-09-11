@@ -102,16 +102,12 @@ public class World {
                 if (mHeight >= mWidth) {
                     int[] locList = Utilities.splitIntoParts(mWidth, num);
                     int partRemaining = mWidth;
-                    for (int i = 0; i < num; i++) {
-                        Mower mower;
-                        if (Utilities.isOdd(i)) {
-                            mower = new Mower("Mower " + (i + 1), partRemaining - 1, 0);
-                            mower.setDirection(Direction.NORTH);
-                        } else {
-                            mower = new Mower("Mower " + (i + 1), partRemaining - 1, mHeight - 1);
-                            mower.setDirection(Direction.SOUTH);
-                        }
-                        partRemaining = partRemaining - locList[i];
+                    int ctr = 0;
+                    for (int i = num; 0 < i; i--) {
+                        Mower mower = new Mower("Mower " + (ctr + 1), partRemaining - 1, mHeight - 1);
+                        mower.setDirection(Direction.SOUTH);
+                        partRemaining = partRemaining - (locList[ctr]);
+                        ctr++;
 
                         mower.setInstruction(new Instruction());
                         mower.setWorld(this);

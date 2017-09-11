@@ -1,18 +1,13 @@
 package com.mower;
 
-import android.content.Context;
-import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends TemplateActivity {
     private TextView mLog, mOutput;
@@ -20,6 +15,7 @@ public class MainActivity extends TemplateActivity {
     private World mWorld;
     private EditText mInput;
     private Button mSend, mRun, mReset;
+    private int mMowerSize;
 
     public static final int TYPE_1 = 1000;
     public static final int TYPE_2 = 1001;
@@ -40,12 +36,20 @@ public class MainActivity extends TemplateActivity {
         mType2 = (RadioButton) findViewById(R.id.type_part_2);
         mType1.setChecked(true);
 
-        mWorld = new World(this, 5, 7);
-        mWorld.addMower("Mower 1", 1, 1, Direction.NORTH, "MRMRMRMRM");
-        mWorld.addMower("Mower 2", 0, 2, Direction.NORTH, "M");
-        mWorld.addMower("Mower 3", 2, 3, Direction.NORTH, "M");
+        mMowerSize = 0;
+        mType2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reset();
+            }
+        });
 
-        mWorld.run();
+        mType1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                reset();
+            }
+        });
 
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,24 +60,152 @@ public class MainActivity extends TemplateActivity {
                 String[] commands = input.split(" ");
                 switch (commands.length) {
                     case 1:
+                        if (mType2.isChecked()) showToast("Invalid Input");
                         if (commands[0].matches(".*\\d+.*")) {
-                            Toast.makeText(MainActivity.this, "Invalid input", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.d("Marvin", "false");
+                            showToast("Invalid Input");
+                            return;
                         }
+                        if (mWorld == null) {
+                            showToast("Create a matrix first!");
+                            return;
+                        }
+                        if(mWorld.getMowers().size() == 0 ) {
+                            showToast("Add some mowers first!");
+                            return;
+                        }
+                        //GO
+
+                        mWorld.getMowers().get(mWorld.getMowers().size() - 1).setInstruction(new Instruction(commands[0]));
+                        showToast("updated " +mWorld.getMowers().get(mWorld.getMowers().size() - 1).getName() + "\'s Instruction Set");
+                        mInput.setText(null);
                         break;
                     case 2:
-                        break;
-                    case 4:
-                }
+                        if (mType2.isChecked()) {
+                            showToast("Invalid Input");
+                            return;
+                        } else {
+                            if (!commands[0].matches("\\d+") || !commands[1].matches("\\d+")) {
+                                showToast("Invalid Input");
+                                return;
+                            }
+                            if (Integer.parseInt(commands[0]) == 0 || Integer.parseInt(commands[1]) == 0) {
+                                showToast("Assigned inputs cannot be zero");
+                                return;
+                            }
 
+                            int width = Integer.parseInt(commands[0]);
+                            int height = Integer.parseInt(commands[1]);
+
+                            mWorld = new World(MainActivity.this, width, height);
+                            showToast("Command Accepted\nCreated a new Matrix");
+
+                            mLog.setText("");
+                            mOutput.setText("");
+                            mInput.setText(null);
+                        }
+                        break;
+                    case 3:
+                        if (mType2.isChecked()) {
+                            if (!commands[0].matches("\\d+") || !commands[1].matches("\\d+") || !commands[2].matches("\\d+")) {
+                                showToast("Invalid Input");
+                                return;
+                            }
+                            if (Integer.parseInt(commands[0]) == 0 || Integer.parseInt(commands[1]) == 0 || Integer.parseInt(commands[2]) == 0) {
+                                showToast("Assigned inputs cannot be zero");
+                                return;
+                            }
+
+                            int mowerSize = Integer.parseInt(commands[2]);
+                            int width = Integer.parseInt(commands[0]);
+                            int height = Integer.parseInt(commands[1]);
+
+                            if (height > width) {
+                                if (mowerSize > width) {
+                                    showToast("The Input should be less than the width " + width);
+                                    return;
+                                }
+                            } else if (height < width) {
+                                if (mowerSize > height) {
+                                    showToast("The Input should be less than the height " + height);
+                                    return;
+                                }
+                            } else {
+                                if (mowerSize > width) {
+                                    showToast("The Input should be less than the width/height " + width);
+                                    return;
+                                }
+                            }
+
+                            mWorld = new World(MainActivity.this, width, height);
+                            mMowerSize = Integer.parseInt(commands[2]);
+                            showToast("Command Accepted\nPlease click the Run button");
+                        } else {
+                            if (mWorld == null) {
+                                showToast("Create a matrix first!");
+                                return;
+                            }
+
+                            if (!commands[0].matches("\\d+") || !commands[1].matches("\\d+") || commands[2].matches("\\d+")) {
+                                showToast("Invalid Input");
+                                return;
+                            }
+
+                            if (commands[2].compareToIgnoreCase("M") == 0 || commands[2].compareToIgnoreCase("L") == 0 || commands[2].compareToIgnoreCase("R") == 0) {
+                                showToast("Invalid Direction");
+                                return;
+                            }
+
+                            int x = Integer.parseInt(commands[0]);
+                            int y = Integer.parseInt(commands[1]);
+
+                            if (x > (mWorld.getWidth() - 1)) {
+                                showToast("Invalid x-coordinate");
+                                return;
+                            }
+
+                            if (y > (mWorld.getHeight() - 1)) {
+                                showToast("Invalid y-coordinate");
+                                return;
+                            }
+
+                            String name = "Mower " + (mWorld.getMowers().size() + 1);
+                            boolean isValid = true;
+                            for (Mower mower : mWorld.getMowers()) {
+                                if (mower.getName().compareToIgnoreCase(name) == 0) continue;
+                                if (mower.getY() == y && mower.getX() == x)
+                                    isValid = false;
+                            }
+                            if(!isValid) {
+                                showToast("Invalid Coordinates");
+                                return;
+                            }
+
+                            mWorld.addMower(name, x, y, Utilities.directionConverter(commands[2]), "");
+                        }
+                        break;
+                    default:
+                        showToast("Invalid Input");
+                        break;
+                }
             }
         });
 
         mRun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mWorld.run(1);
+                if (mWorld == null) {
+                    showToast("Create a matrix first!");
+                    return;
+                }
+                if (mType1.isChecked() && mWorld.getMowers().size() == 0) {
+                    showToast("Add some mowers first!");
+                    return;
+                }
+                if (mType1.isChecked()) {
+                    mWorld.run();
+                } else if (mType2.isChecked()) {
+                    mWorld.run(mMowerSize);
+                }
             }
         });
 
@@ -95,34 +227,9 @@ public class MainActivity extends TemplateActivity {
 
     public void reset() {
         mWorld = null;
+        mMowerSize = 0;
         mLog.setText("");
         mOutput.setText("");
         mInput.setText(null);
-    }
-
-    public void run() {
-//        if (mType1.isSelected()) {
-//            mWorld.run();
-//        } else if (mType2.isSelected()) {
-//            mWorld.run(1);
-//        }
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                    releaseFocus(v);
-                }
-            }
-        }
-        return super.dispatchTouchEvent(event);
     }
 }
