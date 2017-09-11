@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Mower</string>
+
+    <string name="text_detailed_logs">Detailed Logs:</string>
+    <string name="text_output">Output:</string>
+    <string name="text_type">Type:</string>
+    <string name="text_run">Run</string>
+    <string name="text_reset">Reset</string>
+    <string name="text_send">Send</string>
+    <string name="text_part_1">Part 1</string>
+    <string name="text_part_2">Part 2</string>
+
+
+</resources>

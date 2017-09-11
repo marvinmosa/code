@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/dodger_blue</color>
+    <color name="colorPrimaryDark">@color/denim</color>
+    <color name="colorAccent">@color/malachite</color>
+
+    <color name="dodger_blue">#288AE2</color>
+    <color name="denim">#1C66BD</color>
+    <color name="malachite">#1EC659</color>
+
+    <color name="white_smoke">#EFEFEF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="night_rider">#333333</color>
+
+</resources>
