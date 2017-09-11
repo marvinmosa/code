@@ -1,16 +1,20 @@
 package com.mower;
 
+import android.content.Context;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends TemplateActivity {
     private TextView mLog, mOutput;
     private RadioButton mType1, mType2;
     private World mWorld;
@@ -34,14 +38,14 @@ public class MainActivity extends AppCompatActivity {
         mReset = (Button) findViewById(R.id.reset);
         mType1 = (RadioButton) findViewById(R.id.type_part_1);
         mType2 = (RadioButton) findViewById(R.id.type_part_2);
-        mType2.setChecked(true);
+        mType1.setChecked(true);
 
         mWorld = new World(this, 5, 7);
-//        mWorld.addMower("Mower 1", 1, 1, Direction.NORTH, "MRMRMRMRM");
-//        mWorld.addMower("Mower 2", 0, 2, Direction.NORTH, "M");
-//        mWorld.addMower("Mower 3", 2, 3, Direction.NORTH, "M");
+        mWorld.addMower("Mower 1", 1, 1, Direction.NORTH, "MRMRMRMRM");
+        mWorld.addMower("Mower 2", 0, 2, Direction.NORTH, "M");
+        mWorld.addMower("Mower 3", 2, 3, Direction.NORTH, "M");
 
-        mWorld.run(4);
+        mWorld.run();
 
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,5 +106,23 @@ public class MainActivity extends AppCompatActivity {
 //        } else if (mType2.isSelected()) {
 //            mWorld.run(1);
 //        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    releaseFocus(v);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }
