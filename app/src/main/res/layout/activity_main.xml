@@ -63,7 +63,7 @@
                 android:layout_marginRight="@dimen/size_10_dp"
                 android:layout_weight=".2"
                 android:background="@color/white"
-                android:digits="0,1,2,3,4,5,6,7,8,9,MLR, "
+                android:digits="0123456789MLR "
                 android:hint="Only letters and numbers allowed.."
                 android:inputType="text"
                 android:maxLines="1"
