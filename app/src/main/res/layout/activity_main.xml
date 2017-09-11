@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
+    android:background="@color/white_smoke"
     android:orientation="vertical">
 
     <LinearLayout
@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/text_detailed_log"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/size_20_dp"
+        android:layout_marginRight="@dimen/size_20_dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -24,8 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="Type: "
-                android:textSize="16dp"
+                android:text="@string/text_type"
+                android:textColor="@color/night_rider"
+                android:textSize="@dimen/size_16_dp"
                 android:textStyle="bold" />
 
             <RadioGroup
@@ -37,42 +38,45 @@
                     android:id="@+id/type_part_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Part 1" />
+                    android:text="@string/text_part_1" />
 
                 <RadioButton
                     android:id="@+id/type_part_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Part 2" />
+                    android:text="@string/text_part_2" />
             </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <EditText
                 android:id="@+id/input"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_height="@dimen/size_30_dp"
+                android:layout_marginRight="@dimen/size_10_dp"
                 android:layout_weight=".2"
-                android:background="#FFFFFF"
+                android:background="@color/white"
                 android:digits="0,1,2,3,4,5,6,7,8,9,MLR, "
                 android:hint="Only letters and numbers allowed.."
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:textSize="12dp" />
+                android:textSize="@dimen/size_12_dp" />
 
             <Button
                 android:id="@+id/send"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"
-                android:text="Send"
-                android:textSize="12dp" />
+                android:text="@string/text_send"
+                android:textSize="@dimen/size_12_dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -85,43 +89,43 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Reset"
-                android:textSize="12dp" />
+                android:text="@string/text_reset"
+                android:textSize="@dimen/size_12_dp" />
 
             <Button
                 android:id="@+id/run"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Run"
-                android:textSize="12dp" />
+                android:text="@string/text_run"
+                android:textSize="@dimen/size_12_dp" />
         </LinearLayout>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Output:"
-            android:textSize="16dp" />
+            android:text="@string/text_output"
+            android:textColor="@color/night_rider"
+            android:textSize="@dimen/size_16_dp"
+            android:textStyle="bold" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/size_20_dp"
             android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/output"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="#FFFFFF" />
+                    android:background="@color/white" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -131,35 +135,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/holder_log"
-        android:background="#EFEFEF"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:text="Detailed Logs:"
-        android:textSize="16dp" />
+        android:background="@color/white_smoke"
+        android:paddingLeft="@dimen/size_20_dp"
+        android:paddingRight="@dimen/size_20_dp"
+        android:text="@string/text_detailed_logs"
+        android:textColor="@color/night_rider"
+        android:textSize="@dimen/size_16_dp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:id="@+id/holder_log"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="@dimen/size_150_dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/size_10_dp"
+        android:clipToPadding="true"
         android:fillViewport="true"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingLeft="@dimen/size_20_dp"
+        android:paddingRight="@dimen/size_20_dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="@dimen/size_150_dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/logs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="#FFFFFF"
-                android:textSize="12dp" />
+                android:background="@color/white"
+                android:textSize="@dimen/size_12_dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
