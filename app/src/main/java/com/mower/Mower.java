@@ -56,7 +56,7 @@ public class Mower {
         }
     }
 
-    public boolean validateInstruction(String instruction, int areaWidth, int areaHeight, List<Mower> mowers) {
+    public boolean validateInstruction(String instruction, List<Mower> mowers) {
         if (instruction.compareTo(INSTRUCTION_LEFT) == 0 || instruction.compareTo(INSTRUCTION_RIGHT) == 0)
             return true;
 
@@ -68,7 +68,7 @@ public class Mower {
                         return false;
                 }
 
-                if (mYLocation < (areaHeight - 1)) {
+                if (mYLocation < (mWorld.getHeight() - 1)) {
                     if (mWorld.getLawn(mXLocation, mYLocation + 1).isDone()) return false;
                     return true;
                 }
@@ -92,7 +92,7 @@ public class Mower {
                         return false;
                 }
 
-                if (mXLocation < (areaWidth - 1)) {
+                if (mXLocation < (mWorld.getWidth() - 1)) {
                     if (mWorld.getLawn(mXLocation + 1, mYLocation).isDone()) return false;
                     return true;
                 }

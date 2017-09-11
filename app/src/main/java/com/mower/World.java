@@ -131,7 +131,7 @@ public class World {
 
         while (getAvailableLawn() != 0) {
             for (Mower mower : mMowers) {
-                if (mower.validateInstruction("M", mWidth, mHeight, mMowers)) {
+                if (mower.validateInstruction("M", mMowers)) {
                     mower.getInstruction().addInstruction("M");
                     mower.executeMovement("M");
                     getLawn(mower.getX(), mower.getY()).setDone(true);
@@ -188,7 +188,7 @@ public class World {
         while (ctr < longestCommandLength) {
             for (Mower mower : mMowers) {
                 if (mower.getInstruction().getInstructionList().size() > ctr) {
-                    if (mower.validateInstruction(mower.getInstruction().getInstructionList().get(ctr), mWidth, mHeight, mMowers)) {
+                    if (mower.validateInstruction(mower.getInstruction().getInstructionList().get(ctr), mMowers)) {
                         mower.executeMovement(mower.getInstruction().getInstructionList().get(ctr));
                         mActivity.addLog(mower.getName() + " position(" + mower.getX() + "," + mower.getY()
                                 + ") and heading " + mower.getDirection().toString());
@@ -218,6 +218,7 @@ public class World {
                 + ") and heading " + mower.getDirection().toString());
         Log.d("Marvin", name + " initial position(" + mower.getX() + "," + mower.getY()
                 + ") and heading " + mower.getDirection().toString());
+        mower.setWorld(this);
         mMowers.add(mower);
     }
 
