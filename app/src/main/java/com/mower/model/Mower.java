@@ -1,6 +1,4 @@
-package com.mower;
-
-import android.util.Log;
+package com.mower.model;
 
 import java.util.List;
 

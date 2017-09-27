@@ -1,13 +1,17 @@
-package com.mower;
+package com.mower.activity;
 
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import com.mower.model.Instruction;
+import com.mower.model.Mower;
+import com.mower.R;
+import com.mower.Utility.Utilities;
+import com.mower.model.World;
 
 public class MainActivity extends TemplateActivity {
     private TextView mLog, mOutput;

@@ -1,4 +1,7 @@
-package com.mower;
+package com.mower.model;
+
+import com.mower.Utility.Utilities;
+import com.mower.activity.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

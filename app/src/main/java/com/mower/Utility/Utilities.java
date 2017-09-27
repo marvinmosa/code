@@ -1,4 +1,6 @@
-package com.mower;
+package com.mower.Utility;
+
+import com.mower.model.Direction;
 
 import java.util.List;
 

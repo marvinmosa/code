@@ -1,4 +1,4 @@
-package com.mower;
+package com.mower.model;
 
 /**
  * Created by marvinmosa on 9/6/17.

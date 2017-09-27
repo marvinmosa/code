@@ -1,4 +1,4 @@
-package com.mower;
+package com.mower.activity;
 
 import android.content.Context;
 import android.content.Intent;

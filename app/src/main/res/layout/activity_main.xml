@@ -64,7 +64,7 @@
                 android:layout_weight=".2"
                 android:background="@color/white"
                 android:digits="0123456789MLRNSWE "
-                android:hint="Only letters and numbers allowed.."
+                android:hint="Only letters and numbers are allowed.."
                 android:inputType="text"
                 android:maxLines="1"
                 android:singleLine="true"
